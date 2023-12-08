@@ -1,0 +1,62 @@
+
+version: 2
+sources:
+  - name: external_source
+    meta:
+      external_location: ..\source_files\{name}.csv
+    tables:
+      - name: steps
+      - name: users
+
+
+models:
+  - name: steps_data
+    description: "A starter dbt model"
+    columns:
+      - name: user_id
+        description: "The primary key for this table"
+
+
+  - name: users_data
+    description: "Containing Information of the users and their corresponding Company name"
+    columns:
+      - name: user_id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+
+  - name: company_user_stats
+    description: "per Company Name amount of users and % of users that have steps data"
+    columns:
+      - name: company_name
+        description: "Company"
+
+      - name: users_with_steps
+        description: "user id of users with steps data"
+
+      - name: total_users
+        description: "count of total users"
+
+      - name: percentage_users_with_steps
+        description: "percentage of users with steps"
+
+
+  - name: daily_avg_steps
+    description: "the daily average number of steps for all the users, accross all days"
+    columns:
+      - name: activity_date
+        description: "The date which the activity was recorded"
+      - name: avg_steps
+        description: "Average number of steps"
+
+
+  - name: top_bottom_users
+    description: "the top 10 and bottom 10 users with the most (and least) steps collect in any day Output shoudl be for both top & bottom"
+    columns:
+      - name: user_name
+        description: "User name of the user counting the top and bottom number of steps"
+      - name: total_steps
+        description: "Total number of steps"
+
